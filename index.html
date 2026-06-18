@@ -136,14 +136,14 @@ function showTab(id,btn){
   // El mapa se inicializa recién cuando se abre la pestaña.
   // Esto evita el problema de Leaflet cuando el div arranca oculto con display:none.
   if(id==='mapa'){
-    setTimeout(()=>{
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
       if(!window.map){
         initMap();
       }else{
         window.map.invalidateSize(true);
         if(window._mapBounds){ window.map.fitBounds(window._mapBounds,{padding:[25,25]}); }
       }
-    },180);
+    }));
   }
 
   if(id==='recursos'&&!window.budgetInit){budgetChart();window.budgetInit=true}
