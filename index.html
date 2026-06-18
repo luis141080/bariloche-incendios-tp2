@@ -133,15 +133,13 @@ function showTab(id,btn){
   btn.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 
-  // El mapa se inicializa recién cuando se abre la pestaña.
-  // Esto evita el problema de Leaflet cuando el div arranca oculto con display:none.
   if(id==='mapa'){
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      if(!window.map){
+      if(!window._leafletMap){
         initMap();
       }else{
-        window.map.invalidateSize(true);
-        if(window._mapBounds){ window.map.fitBounds(window._mapBounds,{padding:[25,25]}); }
+        window._leafletMap.invalidateSize(true);
+        if(window._mapBounds){ window._leafletMap.fitBounds(window._mapBounds,{padding:[25,25]}); }
       }
     }));
   }
@@ -170,22 +168,21 @@ function initMap(){
   const mapDiv=document.getElementById('map');
   if(!mapDiv) return;
 
-  // Mensaje claro si Leaflet no carga por falta de internet o bloqueo del CDN.
   if(typeof L==='undefined'){
     mapDiv.innerHTML='<div style="height:100%;min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#eef2f0;color:#667085"><div><b>No se pudo cargar el mapa.</b><br>Revisá conexión a internet o que GitHub Pages permita cargar Leaflet desde unpkg.com.</div></div>';
     return;
   }
 
-  if(window.map){
-    window.map.invalidateSize(true);
+  if(window._leafletMap){
+    window._leafletMap.invalidateSize(true);
     return;
   }
 
-  window.map=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
+  window._leafletMap=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     maxZoom:18,
     attribution:'© OpenStreetMap'
-  }).addTo(window.map);
+  }).addTo(window._leafletMap);
 
   const puntos=[];
   const sectores=[
@@ -199,7 +196,7 @@ function initMap(){
     puntos.push(s.c);
     L.circle(s.c,{radius:700,color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2})
      .bindPopup('<b>'+s.n+'</b><br><small>'+s.r+'</small>')
-     .addTo(window.map)
+     .addTo(window._leafletMap)
   });
 
   const inst=[
@@ -215,13 +212,13 @@ function initMap(){
       className:'',iconSize:[30,30],iconAnchor:[15,15]
     })})
     .bindPopup('<b>'+i.n+'</b>')
-    .addTo(window.map)
+    .addTo(window._leafletMap)
   });
 
   window._mapBounds=L.latLngBounds(puntos);
   setTimeout(()=>{
-    window.map.invalidateSize(true);
-    window.map.fitBounds(window._mapBounds,{padding:[25,25]});
+    window._leafletMap.invalidateSize(true);
+    window._leafletMap.fitBounds(window._mapBounds,{padding:[25,25]});
   },250);
 }
 function budgetChart(){new Chart(document.getElementById('budgetChart'),{type:'doughnut',data:{labels:['Material gráfico','Señalización','Capacitaciones','Comunicación','Relevamiento','Ejercicio','Limpieza preventiva','Imprevistos'],datasets:[{data:[750000,1200000,600000,5000000,500000,1100000,1500000,500000],backgroundColor:['#f4a261','#d94835','#e9c46a','#277da1','#52b788','#9b5de5','#2d6a4f','#8d99ae'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': $'+c.parsed.toLocaleString('es-AR')}}},cutout:'58%'}})}
