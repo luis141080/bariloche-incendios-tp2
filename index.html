@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TP2 · Proyecto Incendios de Interfase · Bariloche</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#163b2f;--forest2:#255f48;--green:#52b788;--pale:#e8f5ec;
+  --fire:#d94835;--orange:#f4a261;--warn:#e9c46a;--blue:#277da1;
+  --bg:#f4f4f0;--white:#fff;--text:#1c1f22;--muted:#667085;--line:#dfe7df;
+  --shadow:0 10px 30px rgba(16,24,40,.08);--radius:14px;
+}
+body{font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.55}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+header{background:linear-gradient(135deg,var(--forest),var(--forest2));color:#fff;padding:28px 32px;border-bottom:5px solid var(--fire)}
+.logo{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px;font-weight:800;letter-spacing:.5px}.logo .u{color:#ff5c4d}.logo span{opacity:.88;font-size:.8rem;font-weight:600;text-transform:uppercase}.sep{height:20px;width:1px;background:rgba(255,255,255,.32)}
+h1{font-size:1.55rem;line-height:1.25;max-width:900px}.sub{display:block;font-weight:400;font-size:.95rem;opacity:.86;margin-top:8px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.badge{font-size:.72rem;font-weight:700;border-radius:20px;padding:4px 10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25)}.badge.fire{background:var(--fire);border-color:transparent}.badge.green{background:rgba(82,183,136,.35)}
+nav{position:sticky;top:0;z-index:1000;display:flex;overflow:auto;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.navbtn{border:0;background:transparent;padding:14px 18px;min-width:max-content;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent}.navbtn:hover{color:var(--forest2);background:rgba(37,95,72,.06)}.navbtn.active{color:var(--forest2);border-bottom-color:var(--forest2);background:rgba(37,95,72,.11)}
+main{max-width:1180px;margin:0 auto}.section{display:none;padding:28px 20px}.section.active{display:block}.title{font-size:1.18rem;color:var(--forest2);font-weight:800;margin-bottom:6px}.desc{color:var(--muted);max-width:920px;font-size:.92rem;margin-bottom:20px}.grid{display:grid;gap:16px}.grid2{grid-template-columns:1.2fr .8fr}.grid3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}.card h3{font-size:.96rem;color:var(--forest2);margin-bottom:10px}.card p{color:var(--muted);font-size:.9rem;margin-bottom:8px}.small{font-size:.78rem;color:var(--muted)}.note{background:#fff8e1;border-left:4px solid var(--warn);padding:12px 14px;border-radius:10px;color:#765c09;font-size:.88rem}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}.kpi .num{font-size:1.85rem;font-weight:850;color:var(--fire);line-height:1}.kpi .lbl{font-size:.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:7px;letter-spacing:.4px}.kpi .unit{font-size:.77rem;color:var(--muted);margin-top:5px}
+#map{height:520px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}.legend{display:flex;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}.leg{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.78rem}.dot{width:13px;height:13px;border-radius:50%;display:block}.poly{width:20px;height:14px;border-radius:4px;opacity:.65}
+.timeline{position:relative;margin-top:10px}.tlrow{display:grid;grid-template-columns:86px 1fr;gap:14px;margin-bottom:12px}.tlmonth{font-weight:800;color:var(--forest2);font-size:.86rem;text-align:right;padding-top:12px}.tlbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:0 3px 10px rgba(0,0,0,.04)}.tlbox b{color:var(--text)}.tlbox .prod{color:var(--muted);font-size:.82rem}.tag{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 7px;border-radius:14px;margin-right:5px;background:var(--pale);color:var(--forest2)}
+.actor-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.actor{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.avatar{width:38px;height:38px;border-radius:12px;background:var(--forest2);color:white;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}.actor b{font-size:.86rem}.actor p{font-size:.79rem;color:var(--muted);margin:3px 0 0}
+.resource-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}.resource-table th{background:var(--forest2);color:#fff;text-align:left;font-size:.76rem;padding:10px}.resource-table td{border-bottom:1px solid var(--line);padding:9px;font-size:.8rem;color:var(--muted)}.resource-table tr:last-child td{border-bottom:0}.resource-table td:nth-child(5){font-weight:800;color:var(--text);white-space:nowrap}
+.stepper{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}.step{padding:12px 10px;border-radius:12px;background:#fff;border:1px solid var(--line);text-align:center;cursor:pointer;transition:.2s}.step:hover,.step.active{border-color:var(--fire);background:#fff2ef;transform:translateY(-2px)}.step .n{width:26px;height:26px;border-radius:50%;background:var(--fire);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:6px}.step p{font-size:.76rem;color:var(--muted);font-weight:700}.scenario-box{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;min-height:110px}.scenario-box h3{color:var(--fire);font-size:.98rem;margin-bottom:8px}.scenario-box p{color:var(--muted);font-size:.9rem}
+footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text-align:center;padding:18px;font-size:.78rem}
+@media(max-width:800px){header{padding:22px 18px}h1{font-size:1.22rem}.grid2,.grid3,.actor-grid,.kpis{grid-template-columns:1fr}.stepper{grid-template-columns:repeat(2,1fr)}#map{height:390px}.tlrow{grid-template-columns:1fr}.tlmonth{text-align:left;padding-top:0}.navbtn{font-size:.8rem;padding:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><strong><span class="u">U</span>NTREF</strong><span class="sep"></span><span>Lic. en Protección Civil y Emergencias</span><span class="sep"></span><span>Seminario Integrador</span></div>
+  <h1>Programa de fortalecimiento comunitario e institucional frente a incendios de interfase<span class="sub">San Carlos de Bariloche · Propuesta de proyecto TP2 · Junio 2026</span></h1>
+  <div class="badges"><span class="badge fire">Interfase urbano-forestal</span><span class="badge">Protección Civil Municipal</span><span class="badge">SPLIF Río Negro</span><span class="badge">Bomberos Voluntarios</span><span class="badge green">Participación comunitaria</span></div>
+</header>
+<nav>
+  <button class="navbtn active" onclick="showTab('inicio',this)">🏠 Inicio</button>
+  <button class="navbtn" onclick="showTab('mapa',this)">🗺️ Mapa del proyecto</button>
+  <button class="navbtn" onclick="showTab('actividades',this)">📅 Actividades</button>
+  <button class="navbtn" onclick="showTab('actores',this)">🤝 Actores</button>
+  <button class="navbtn" onclick="showTab('recursos',this)">💰 Recursos</button>
+  <button class="navbtn" onclick="showTab('indicadores',this)">📊 Indicadores</button>
+  <button class="navbtn" onclick="showTab('simulacro',this)">🚨 Ejercicio</button>
+  <button class="navbtn" onclick="showTab('fuentes',this)">📚 Fuentes</button>
+</nav>
+<main>
+<section id="tab-inicio" class="section active">
+  <p class="title">Complemento digital del Trabajo Práctico N°2</p>
+  <p class="desc">Este micrositio acompaña la propuesta de proyecto. A diferencia del anexo del TP1, que mostraba el diagnóstico y el FODA, acá se ordena la intervención: dónde iniciar, qué actores participan, qué actividades se proponen, qué recursos hacen falta y cómo se podría seguir el avance.</p>
+  <div class="grid grid2">
+    <div class="card"><h3>Problema que se busca abordar</h3><p>Bariloche presenta un riesgo creciente frente a incendios en la interfase urbano-forestal. En el trabajo anterior se vio que hay factores naturales, como sequías y vientos, pero también factores humanos, como la expansión urbana hacia zonas boscosas, la acumulación de material combustible y una participación comunitaria todavía insuficiente.</p><p>La propuesta no pretende resolver todo el problema en una sola etapa. La idea es iniciar un proceso concreto, con barrios o sectores a relevar, capacitación, comunicación preventiva y un ejercicio acotado para probar la coordinación.</p></div>
+    <div class="card"><h3>Objetivo del proyecto</h3><p>Fortalecer la preparación comunitaria e institucional frente a incendios de interfase en barrios y sectores priorizados de San Carlos de Bariloche, mediante acciones de prevención, capacitación, comunicación y coordinación entre organismos.</p><div class="note">Los sectores marcados en el mapa se presentan como puntos de inicio para el relevamiento. La priorización final debería validarse con Protección Civil, SPLIF, Bomberos y referentes barriales.</div></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="lbl">Duración estimada</div><div class="num" data-target="6">0</div><div class="unit">meses de trabajo</div></div>
+    <div class="kpi"><div class="lbl">Personas a alcanzar</div><div class="num" data-target="300">0</div><div class="unit">vecinos/as capacitados</div></div>
+    <div class="kpi"><div class="lbl">Barrios/sectores</div><div class="num" data-target="5">0</div><div class="unit">con canales activos</div></div>
+    <div class="kpi"><div class="lbl">Puntos señalizados</div><div class="num" data-target="20">0</div><div class="unit">rutas y zonas seguras</div></div>
+    <div class="kpi"><div class="lbl">Presupuesto</div><div class="num" data-target="7150000">0</div><div class="unit">pesos estimados</div></div>
+  </div>
+</section>
+<section id="tab-mapa" class="section">
+  <p class="title">Mapa del proyecto</p>
+  <p class="desc">Visualización de sectores propuestos para el relevamiento inicial y principales instituciones intervinientes. No reemplaza una cartografía oficial, sino que sirve como apoyo para mostrar la lógica territorial del proyecto.</p>
+  <div id="map"></div>
+  <div class="legend"><div class="leg"><span class="poly" style="background:#d94835"></span>Sector propuesto para relevamiento</div><div class="leg"><span class="dot" style="background:#277da1"></span>Instituciones / respuesta</div><div class="leg"><span class="dot" style="background:#52b788"></span>Espacio comunitario / educativo</div><div class="leg"><span class="dot" style="background:#d94835"></span>Antecedente de foco/incendio</div></div>
+  <p class="small" style="margin-top:8px">Nota: para evitar afirmaciones incorrectas, se habla de sectores de trabajo o relevamiento inicial. La delimitación final requiere validación institucional y territorial.</p>
+</section>
+<section id="tab-actividades" class="section">
+  <p class="title">Actividades y tareas del proyecto</p>
+  <p class="desc">Cronograma operativo simplificado en seis meses. Se toma como base el Excel de apoyo del proyecto.</p>
+  <div class="timeline">
+    <div class="tlrow"><div class="tlmonth">Mes 1</div><div class="tlbox"><span class="tag">A1</span><b>Mesa de trabajo inicial</b><br><span class="prod">Definición de sectores a relevar, responsables y cronograma de trabajo.</span></div></div>
+    <div class="tlrow"><div class="tlmonth">Mes 1-2</div><div class="tlbox"><span class="tag">A2</span><b>Relevamiento de zonas críticas</b><br><span class="prod">Mapa simple de puntos de riesgo, accesos, acumulación de residuos y posibles rutas de evacuación.</span></div></div>
+    <div class="tlrow"><div class="tlmonth">Mes 2-3</div><div class="tlbox"><span class="tag">A3</span><b>Campañas de sensibilización</b><br><span class="prod">Charlas, publicaciones, folletería y mensajes preventivos en escuelas, juntas vecinales y redes locales.</span></div></div>
+    <div class="tlrow"><div class="tlmonth">Mes 3-4</div><div class="tlbox"><span class="tag">A4</span><b>Capacitación de referentes barriales</b><br><span class="prod">Vecinos referentes capacitados en prevención básica, comunicación de emergencia y pautas de evacuación.</span></div></div>
+    <div class="tlrow"><div class="tlmonth">Mes 4</div><div class="tlbox"><span class="tag">A5</span><b>Señalización y canales de comunicación</b><br><span class="prod">Puntos señalizados, grupos vecinales activos y mensajes básicos de autoprotección.</span></div></div>
+    <div class="tlrow"><div class="tlmonth">Mes 5</div><div class="tlbox"><span class="tag">A6</span><b>Ejercicio de mesa o simulacro barrial</b><br><span class="prod">Prueba acotada de comunicación, aviso, evacuación preventiva y coordinación institucional.</span></div></div>
+    <div class="tlrow"><div class="tlmonth">Mes 6</div><div class="tlbox"><span class="tag">A7</span><b>Evaluación y ajuste final</b><br><span class="prod">Informe final con dificultades, lecciones aprendidas y propuestas de mejora para una segunda etapa.</span></div></div>
+  </div>
+</section>
+<section id="tab-actores" class="section">
+  <p class="title">Actores intervinientes</p><p class="desc">El proyecto depende de una articulación real entre instituciones, equipos operativos y comunidad. Esta matriz resume el rol principal de cada actor.</p>
+  <div class="actor-grid">
+    <div class="actor"><div class="avatar">PC</div><div><b>Subsecretaría de Protección Civil</b><p>Coordina el proyecto, convoca a las instituciones, ordena la información y sistematiza resultados.</p></div></div>
+    <div class="actor"><div class="avatar">S</div><div><b>SPLIF Río Negro</b><p>Aporta conocimiento técnico sobre prevención, combustible vegetal, comportamiento del fuego y zonas críticas.</p></div></div>
+    <div class="actor"><div class="avatar">B</div><div><b>Bomberos Voluntarios</b><p>Acompañan capacitaciones, pautas de autoprotección y ejercicios de respuesta comunitaria.</p></div></div>
+    <div class="actor"><div class="avatar">PN</div><div><b>Parque Nacional Nahuel Huapi</b><p>Orienta sobre áreas naturales protegidas y articulación ambiental en sectores cercanos al bosque.</p></div></div>
+    <div class="actor"><div class="avatar">M</div><div><b>Municipalidad de Bariloche</b><p>Apoyo logístico, comunicación pública, maquinaria, delegaciones y recursos básicos.</p></div></div>
+    <div class="actor"><div class="avatar">JV</div><div><b>Juntas vecinales</b><p>Convocan vecinos, difunden información, relevan necesidades y sostienen canales barriales.</p></div></div>
+    <div class="actor"><div class="avatar">E</div><div><b>Instituciones educativas</b><p>Funcionan como espacios de sensibilización y actividades preventivas con estudiantes y familias.</p></div></div>
+    <div class="actor"><div class="avatar">O</div><div><b>ONG y sector privado</b><p>Pueden apoyar con voluntariado, insumos, difusión y responsabilidad social empresaria.</p></div></div>
+  </div>
+</section>
+<section id="tab-recursos" class="section">
+  <p class="title">Recursos necesarios y presupuesto estimativo</p><p class="desc">Valores orientativos para presentar la escala del proyecto. Los montos reales deberían actualizarse al momento de gestión y compra.</p>
+  <div class="grid grid2"><div class="card"><h3>Presupuesto por rubro</h3><canvas id="budgetChart" height="260"></canvas></div><div class="card"><h3>Tipos de recursos</h3><p><b>Humanos:</b> personal técnico de SPLIF, Protección Civil, Bomberos, referentes barriales y docentes.</p><p><b>Materiales:</b> folletos, cartelería, botiquines, equipos de comunicación, vehículos y elementos de señalización.</p><p><b>Financieros:</b> presupuesto municipal, fondos provinciales, aportes privados y posibles programas nacionales o internacionales.</p><p><b>Tecnológicos:</b> mapas georreferenciados, canales digitales de comunicación y registros de seguimiento.</p></div></div>
+  <table class="resource-table" style="margin-top:16px"><thead><tr><th>Concepto</th><th>Cantidad</th><th>Unidad</th><th>Financiador posible</th><th>Total</th></tr></thead><tbody>
+    <tr><td>Material gráfico y digital de prevención</td><td>1</td><td>paquete</td><td>Municipio / Provincia</td><td>$750.000</td></tr><tr><td>Señalización en sectores priorizados</td><td>20</td><td>puntos</td><td>Municipio / Provincia</td><td>$1.200.000</td></tr><tr><td>Capacitaciones y talleres comunitarios</td><td>6</td><td>encuentros</td><td>Municipio / ONGs</td><td>$600.000</td></tr><tr><td>Equipos y apoyo de comunicación</td><td>1</td><td>lote</td><td>Provincia / Empresas</td><td>$1.000.000</td></tr><tr><td>Relevamiento y mapeo territorial</td><td>1</td><td>etapa</td><td>Municipio</td><td>$500.000</td></tr><tr><td>Simulacro o ejercicio barrial</td><td>1</td><td>jornada</td><td>Municipio / Provincia</td><td>$1.100.000</td></tr><tr><td>Limpieza preventiva y apoyo operativo</td><td>2</td><td>jornadas</td><td>Municipio / Empresas</td><td>$1.500.000</td></tr><tr><td>Imprevistos</td><td>1</td><td>global</td><td>A definir</td><td>$500.000</td></tr><tr><td colspan="4"><b>Total general estimado</b></td><td><b>$7.150.000</b></td></tr>
+  </tbody></table>
+</section>
+<section id="tab-indicadores" class="section">
+  <p class="title">Indicadores de seguimiento</p><p class="desc">Los indicadores permiten ver si el proyecto avanza. No son para “adornar” el trabajo, sino para dejar una forma simple de medir lo realizado.</p>
+  <div class="grid grid2"><div class="card"><h3>Metas iniciales</h3><canvas id="indChart" height="260"></canvas></div><div class="card"><h3>Indicadores propuestos</h3><table class="resource-table"><tbody><tr><td>Personas capacitadas</td><td>300 vecinos/as</td></tr><tr><td>Reuniones interinstitucionales</td><td>4 reuniones y 1 protocolo</td></tr><tr><td>Barrios con canales activos</td><td>5 barrios / sectores</td></tr><tr><td>Puntos señalizados</td><td>20 puntos</td></tr><tr><td>Ejercicio realizado</td><td>1 ejercicio o simulacro</td></tr></tbody></table></div></div>
+</section>
+<section id="tab-simulacro" class="section">
+  <p class="title">Ejercicio propuesto</p><p class="desc">Ejemplo de ejercicio acotado para probar coordinación, comunicación y tiempos. Puede ser de mesa o simulacro barrial, según los recursos disponibles.</p>
+  <div class="card"><h3>Escenario base</h3><p>Inicio de foco ígneo en zona de interfase, con viento moderado a fuerte y presencia de viviendas cercanas. Se activa el aviso a instituciones y a referentes barriales para iniciar medidas de autoprotección, información y eventual evacuación preventiva.</p></div>
+  <div class="stepper">
+    <div class="step active" onclick="step(0)"><div class="n">1</div><p>Alerta</p></div><div class="step" onclick="step(1)"><div class="n">2</div><p>Comunicación</p></div><div class="step" onclick="step(2)"><div class="n">3</div><p>Activación</p></div><div class="step" onclick="step(3)"><div class="n">4</div><p>Evacuación</p></div><div class="step" onclick="step(4)"><div class="n">5</div><p>Asistencia</p></div><div class="step" onclick="step(5)"><div class="n">6</div><p>Evaluación</p></div>
+  </div>
+  <div id="scenario" class="scenario-box"><h3>1. Recepción de alerta</h3><p>Se recibe aviso de foco o condición crítica. Protección Civil y SPLIF validan información inicial, ubicación y posible evolución.</p></div>
+</section>
+<section id="tab-fuentes" class="section">
+  <p class="title">Fuentes y bibliografía de apoyo</p><p class="desc">Listado base utilizado para el trabajo y para este complemento digital. Las referencias formales deben mantenerse en APA 7 dentro del documento final.</p>
+  <div class="card"><ul style="padding-left:18px;color:var(--muted);font-size:.9rem"><li>Municipalidad de San Carlos de Bariloche. Plan de Emergencias / Plan de contingencia de incendios de interfase.</li><li>Servicio de Prevención y Lucha contra Incendios Forestales. (2024). Plan de protección contra incendios forestales: Río Negro.</li><li>Dirección Nacional de Fortalecimiento de las Capacidades de Gestión. (2020). Guía de planificación y seguimiento de gestión de políticas públicas.</li><li>Ministerio de Seguridad de la Nación. (2015). Glosario integrado: Protección Civil y Gestión Integral de Riesgo.</li><li>Bariloche Informa. (2026). Antecedentes de focos ígneos y apoyo municipal.</li><li>Gobierno de Río Negro. (2024). Información institucional del SPLIF.</li></ul></div>
+</section>
+</main>
+<footer>TP2 · Seminario Integrador · UNTREF · Pica, García y Pabon · Junio 2026</footer>
+<script>
+function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='mapa'&&window.map){setTimeout(()=>window.map.invalidateSize(),120)}if(id==='recursos'&&!window.budgetInit){budgetChart();window.budgetInit=true}if(id==='indicadores'&&!window.indInit){indChart();window.indInit=true}animateNumbers();}
+function animateNumbers(){document.querySelectorAll('.num').forEach(el=>{const target=parseInt(el.dataset.target||0);let start=0,dur=900,t0=null;function run(t){if(!t0)t0=t;let p=Math.min((t-t0)/dur,1);let v=Math.floor(start+(target-start)*(p*(2-p)));el.textContent=v.toLocaleString('es-AR');if(p<1)requestAnimationFrame(run)}requestAnimationFrame(run)})}
+function initMap(){window.map=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);const sectores=[{n:'Eva Perón / Cantera',c:[-41.162,-71.305],r:'Sector sur con antecedente de foco ígneo. Requiere relevamiento de accesos y combustible.'},{n:'Melipal',c:[-41.139,-71.374],r:'Sector de interfase sobre faldeo y zona residencial cercana a bosque.'},{n:'El Frutillar',c:[-41.164,-71.334],r:'Sector urbano de la zona sur, con necesidad de prevención comunitaria.'},{n:'Arrayanes',c:[-41.173,-71.349],r:'Sector propuesto para relevamiento inicial por proximidad a áreas de vegetación.'},{n:'San Cayetanito / barda',c:[-41.150,-71.292],r:'Sector de barda mencionado como zona a observar por antecedentes de foco.'}];sectores.forEach(s=>{L.circle(s.c,{radius:700,color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2}).bindPopup('<b>'+s.n+'</b><br><small>'+s.r+'</small>').addTo(map)});const inst=[{n:'Protección Civil Municipal',c:[-41.1337,-71.3109],l:'PC'},{n:'SPLIF Bariloche',c:[-41.1299,-71.4248],l:'S'},{n:'Bomberos Voluntarios',c:[-41.1476,-71.2988],l:'B'},{n:'Hospital Zonal Ramón Carrillo',c:[-41.1364,-71.3000],l:'H'}];inst.forEach(i=>{L.marker(i.c,{icon:L.divIcon({html:'<div style="background:#277da1;color:#fff;border:2px solid #fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;box-shadow:0 2px 8px #0005">'+i.l+'</div>',className:'',iconSize:[30,30]})}).bindPopup('<b>'+i.n+'</b>').addTo(map)});}
+function budgetChart(){new Chart(document.getElementById('budgetChart'),{type:'doughnut',data:{labels:['Material gráfico','Señalización','Capacitaciones','Comunicación','Relevamiento','Ejercicio','Limpieza preventiva','Imprevistos'],datasets:[{data:[750000,1200000,600000,1000000,500000,1100000,1500000,500000],backgroundColor:['#f4a261','#d94835','#e9c46a','#277da1','#52b788','#9b5de5','#2d6a4f','#8d99ae'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': $'+c.parsed.toLocaleString('es-AR')}}},cutout:'58%'}})}
+function indChart(){new Chart(document.getElementById('indChart'),{type:'bar',data:{labels:['Personas','Reuniones','Barrios','Puntos','Ejercicios'],datasets:[{label:'Meta inicial',data:[300,4,5,20,1],backgroundColor:['#d94835','#277da1','#52b788','#f4a261','#9b5de5'],borderRadius:8}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}},x:{grid:{display:false}}}}})}
+const steps=[['1. Recepción de alerta','Se recibe aviso de foco o condición crítica. Protección Civil y SPLIF validan información inicial, ubicación y posible evolución.'],['2. Comunicación a referentes','Se emite mensaje breve a referentes barriales y vecinos: zona afectada, conducta esperada, puntos seguros y canales oficiales.'],['3. Activación institucional','SPLIF, Bomberos, Protección Civil y demás actores activan roles previstos. Se ordenan recursos, accesos y comunicación operativa.'],['4. Evacuación preventiva','Si el escenario lo requiere, se guía la salida preventiva de familias vulnerables hacia puntos seguros previamente señalizados.'],['5. Asistencia y control','Se registra población movilizada, necesidades básicas y situación del foco. Se evita saturar el área de intervención.'],['6. Evaluación posterior','Se realiza un cierre con lecciones aprendidas: qué funcionó, qué falló, tiempos, comunicación y mejoras al plan.']];function step(i){document.querySelectorAll('.step').forEach((e,j)=>e.classList.toggle('active',i===j));document.getElementById('scenario').innerHTML='<h3>'+steps[i][0]+'</h3><p>'+steps[i][1]+'</p>'}
+window.addEventListener('load',()=>{initMap();animateNumbers();});
+</script>
+</body>
+</html>
