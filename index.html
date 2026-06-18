@@ -26,7 +26,7 @@ nav{position:sticky;top:0;z-index:1000;display:flex;overflow:auto;background:rgb
 main{max-width:1180px;margin:0 auto}.section{display:none;padding:28px 20px}.section.active{display:block}.title{font-size:1.18rem;color:var(--forest2);font-weight:800;margin-bottom:6px}.desc{color:var(--muted);max-width:920px;font-size:.92rem;margin-bottom:20px}.grid{display:grid;gap:16px}.grid2{grid-template-columns:1.2fr .8fr}.grid3{grid-template-columns:repeat(3,1fr)}
 .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}.card h3{font-size:.96rem;color:var(--forest2);margin-bottom:10px}.card p{color:var(--muted);font-size:.9rem;margin-bottom:8px}.small{font-size:.78rem;color:var(--muted)}.note{background:#fff8e1;border-left:4px solid var(--warn);padding:12px 14px;border-radius:10px;color:#765c09;font-size:.88rem}
 .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}.kpi .num{font-size:1.85rem;font-weight:850;color:var(--fire);line-height:1}.kpi .lbl{font-size:.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:7px;letter-spacing:.4px}.kpi .unit{font-size:.77rem;color:var(--muted);margin-top:5px}
-#map{height:520px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}.legend{display:flex;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}.leg{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.78rem}.dot{width:13px;height:13px;border-radius:50%;display:block}.poly{width:20px;height:14px;border-radius:4px;opacity:.65}
+#map{height:520px;min-height:420px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;background:#eef2f0}.legend{display:flex;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}.leg{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.78rem}.dot{width:13px;height:13px;border-radius:50%;display:block}.poly{width:20px;height:14px;border-radius:4px;opacity:.65}
 .timeline{position:relative;margin-top:10px}.tlrow{display:grid;grid-template-columns:86px 1fr;gap:14px;margin-bottom:12px}.tlmonth{font-weight:800;color:var(--forest2);font-size:.86rem;text-align:right;padding-top:12px}.tlbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:0 3px 10px rgba(0,0,0,.04)}.tlbox b{color:var(--text)}.tlbox .prod{color:var(--muted);font-size:.82rem}.tag{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 7px;border-radius:14px;margin-right:5px;background:var(--pale);color:var(--forest2)}
 .actor-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.actor{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.avatar{width:38px;height:38px;border-radius:12px;background:var(--forest2);color:white;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}.actor b{font-size:.86rem}.actor p{font-size:.79rem;color:var(--muted);margin:3px 0 0}
 .resource-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}.resource-table th{background:var(--forest2);color:#fff;text-align:left;font-size:.76rem;padding:10px}.resource-table td{border-bottom:1px solid var(--line);padding:9px;font-size:.8rem;color:var(--muted)}.resource-table tr:last-child td{border-bottom:0}.resource-table td:nth-child(5){font-weight:800;color:var(--text);white-space:nowrap}
@@ -64,7 +64,7 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
     <div class="kpi"><div class="lbl">Personas a alcanzar</div><div class="num" data-target="300">0</div><div class="unit">vecinos/as capacitados</div></div>
     <div class="kpi"><div class="lbl">Barrios/sectores</div><div class="num" data-target="5">0</div><div class="unit">con canales activos</div></div>
     <div class="kpi"><div class="lbl">Puntos señalizados</div><div class="num" data-target="20">0</div><div class="unit">rutas y zonas seguras</div></div>
-    <div class="kpi"><div class="lbl">Presupuesto</div><div class="num" data-target="7150000">0</div><div class="unit">pesos estimados</div></div>
+    <div class="kpi"><div class="lbl">Presupuesto</div><div class="num" data-target="11150000">0</div><div class="unit">pesos estimados</div></div>
   </div>
 </section>
 <section id="tab-mapa" class="section">
@@ -104,7 +104,7 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
   <p class="title">Recursos necesarios y presupuesto estimativo</p><p class="desc">Valores orientativos para presentar la escala del proyecto. Los montos reales deberían actualizarse al momento de gestión y compra.</p>
   <div class="grid grid2"><div class="card"><h3>Presupuesto por rubro</h3><canvas id="budgetChart" height="260"></canvas></div><div class="card"><h3>Tipos de recursos</h3><p><b>Humanos:</b> personal técnico de SPLIF, Protección Civil, Bomberos, referentes barriales y docentes.</p><p><b>Materiales:</b> folletos, cartelería, botiquines, equipos de comunicación, vehículos y elementos de señalización.</p><p><b>Financieros:</b> presupuesto municipal, fondos provinciales, aportes privados y posibles programas nacionales o internacionales.</p><p><b>Tecnológicos:</b> mapas georreferenciados, canales digitales de comunicación y registros de seguimiento.</p></div></div>
   <table class="resource-table" style="margin-top:16px"><thead><tr><th>Concepto</th><th>Cantidad</th><th>Unidad</th><th>Financiador posible</th><th>Total</th></tr></thead><tbody>
-    <tr><td>Material gráfico y digital de prevención</td><td>1</td><td>paquete</td><td>Municipio / Provincia</td><td>$750.000</td></tr><tr><td>Señalización en sectores priorizados</td><td>20</td><td>puntos</td><td>Municipio / Provincia</td><td>$1.200.000</td></tr><tr><td>Capacitaciones y talleres comunitarios</td><td>6</td><td>encuentros</td><td>Municipio / ONGs</td><td>$600.000</td></tr><tr><td>Equipos y apoyo de comunicación</td><td>1</td><td>lote</td><td>Provincia / Empresas</td><td>$1.000.000</td></tr><tr><td>Relevamiento y mapeo territorial</td><td>1</td><td>etapa</td><td>Municipio</td><td>$500.000</td></tr><tr><td>Simulacro o ejercicio barrial</td><td>1</td><td>jornada</td><td>Municipio / Provincia</td><td>$1.100.000</td></tr><tr><td>Limpieza preventiva y apoyo operativo</td><td>2</td><td>jornadas</td><td>Municipio / Empresas</td><td>$1.500.000</td></tr><tr><td>Imprevistos</td><td>1</td><td>global</td><td>A definir</td><td>$500.000</td></tr><tr><td colspan="4"><b>Total general estimado</b></td><td><b>$7.150.000</b></td></tr>
+    <tr><td>Material gráfico y digital de prevención</td><td>1</td><td>paquete</td><td>Municipio / Provincia</td><td>$750.000</td></tr><tr><td>Señalización en sectores priorizados</td><td>20</td><td>puntos</td><td>Municipio / Provincia</td><td>$1.200.000</td></tr><tr><td>Capacitaciones y talleres comunitarios</td><td>6</td><td>encuentros</td><td>Municipio / ONGs</td><td>$600.000</td></tr><tr><td>Equipos y apoyo de comunicación</td><td>5</td><td>equipos/lotes</td><td>Provincia / Empresas</td><td>$5.000.000</td></tr><tr><td>Relevamiento y mapeo territorial</td><td>1</td><td>etapa</td><td>Municipio</td><td>$500.000</td></tr><tr><td>Simulacro o ejercicio barrial</td><td>1</td><td>jornada</td><td>Municipio / Provincia</td><td>$1.100.000</td></tr><tr><td>Limpieza preventiva y apoyo operativo</td><td>2</td><td>jornadas</td><td>Municipio / Empresas</td><td>$1.500.000</td></tr><tr><td>Imprevistos</td><td>1</td><td>global</td><td>A definir</td><td>$500.000</td></tr><tr><td colspan="4"><b>Total general estimado</b></td><td><b>$11.150.000</b></td></tr>
   </tbody></table>
 </section>
 <section id="tab-indicadores" class="section">
@@ -126,13 +126,108 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
 </main>
 <footer>TP2 · Seminario Integrador · UNTREF · Pica, García y Pabon · Junio 2026</footer>
 <script>
-function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='mapa'&&window.map){setTimeout(()=>window.map.invalidateSize(),120)}if(id==='recursos'&&!window.budgetInit){budgetChart();window.budgetInit=true}if(id==='indicadores'&&!window.indInit){indChart();window.indInit=true}animateNumbers();}
-function animateNumbers(){document.querySelectorAll('.num').forEach(el=>{const target=parseInt(el.dataset.target||0);let start=0,dur=900,t0=null;function run(t){if(!t0)t0=t;let p=Math.min((t-t0)/dur,1);let v=Math.floor(start+(target-start)*(p*(2-p)));el.textContent=v.toLocaleString('es-AR');if(p<1)requestAnimationFrame(run)}requestAnimationFrame(run)})}
-function initMap(){window.map=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);const sectores=[{n:'Eva Perón / Cantera',c:[-41.162,-71.305],r:'Sector sur con antecedente de foco ígneo. Requiere relevamiento de accesos y combustible.'},{n:'Melipal',c:[-41.139,-71.374],r:'Sector de interfase sobre faldeo y zona residencial cercana a bosque.'},{n:'El Frutillar',c:[-41.164,-71.334],r:'Sector urbano de la zona sur, con necesidad de prevención comunitaria.'},{n:'Arrayanes',c:[-41.173,-71.349],r:'Sector propuesto para relevamiento inicial por proximidad a áreas de vegetación.'},{n:'San Cayetanito / barda',c:[-41.150,-71.292],r:'Sector de barda mencionado como zona a observar por antecedentes de foco.'}];sectores.forEach(s=>{L.circle(s.c,{radius:700,color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2}).bindPopup('<b>'+s.n+'</b><br><small>'+s.r+'</small>').addTo(map)});const inst=[{n:'Protección Civil Municipal',c:[-41.1337,-71.3109],l:'PC'},{n:'SPLIF Bariloche',c:[-41.1299,-71.4248],l:'S'},{n:'Bomberos Voluntarios',c:[-41.1476,-71.2988],l:'B'},{n:'Hospital Zonal Ramón Carrillo',c:[-41.1364,-71.3000],l:'H'}];inst.forEach(i=>{L.marker(i.c,{icon:L.divIcon({html:'<div style="background:#277da1;color:#fff;border:2px solid #fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;box-shadow:0 2px 8px #0005">'+i.l+'</div>',className:'',iconSize:[30,30]})}).bindPopup('<b>'+i.n+'</b>').addTo(map)});}
-function budgetChart(){new Chart(document.getElementById('budgetChart'),{type:'doughnut',data:{labels:['Material gráfico','Señalización','Capacitaciones','Comunicación','Relevamiento','Ejercicio','Limpieza preventiva','Imprevistos'],datasets:[{data:[750000,1200000,600000,1000000,500000,1100000,1500000,500000],backgroundColor:['#f4a261','#d94835','#e9c46a','#277da1','#52b788','#9b5de5','#2d6a4f','#8d99ae'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': $'+c.parsed.toLocaleString('es-AR')}}},cutout:'58%'}})}
+function showTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  // El mapa se inicializa recién cuando se abre la pestaña.
+  // Esto evita el problema de Leaflet cuando el div arranca oculto con display:none.
+  if(id==='mapa'){
+    setTimeout(()=>{
+      if(!window.map){
+        initMap();
+      }else{
+        window.map.invalidateSize(true);
+        if(window._mapBounds){ window.map.fitBounds(window._mapBounds,{padding:[25,25]}); }
+      }
+    },180);
+  }
+
+  if(id==='recursos'&&!window.budgetInit){budgetChart();window.budgetInit=true}
+  if(id==='indicadores'&&!window.indInit){indChart();window.indInit=true}
+  animateNumbers();
+}
+
+function animateNumbers(){
+  document.querySelectorAll('.num').forEach(el=>{
+    const target=parseInt(el.dataset.target||0);
+    let start=0,dur=900,t0=null;
+    function run(t){
+      if(!t0)t0=t;
+      let p=Math.min((t-t0)/dur,1);
+      let v=Math.floor(start+(target-start)*(p*(2-p)));
+      el.textContent=v.toLocaleString('es-AR');
+      if(p<1)requestAnimationFrame(run)
+    }
+    requestAnimationFrame(run)
+  })
+}
+
+function initMap(){
+  const mapDiv=document.getElementById('map');
+  if(!mapDiv) return;
+
+  // Mensaje claro si Leaflet no carga por falta de internet o bloqueo del CDN.
+  if(typeof L==='undefined'){
+    mapDiv.innerHTML='<div style="height:100%;min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#eef2f0;color:#667085"><div><b>No se pudo cargar el mapa.</b><br>Revisá conexión a internet o que GitHub Pages permita cargar Leaflet desde unpkg.com.</div></div>';
+    return;
+  }
+
+  if(window.map){
+    window.map.invalidateSize(true);
+    return;
+  }
+
+  window.map=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:18,
+    attribution:'© OpenStreetMap'
+  }).addTo(window.map);
+
+  const puntos=[];
+  const sectores=[
+    {n:'Eva Perón / Cantera',c:[-41.162,-71.305],r:'Sector sur con antecedente de foco ígneo. Requiere relevamiento de accesos y combustible.'},
+    {n:'Melipal',c:[-41.139,-71.374],r:'Sector de interfase sobre faldeo y zona residencial cercana a bosque.'},
+    {n:'El Frutillar',c:[-41.164,-71.334],r:'Sector urbano de la zona sur, con necesidad de prevención comunitaria.'},
+    {n:'Arrayanes',c:[-41.173,-71.349],r:'Sector propuesto para relevamiento inicial por proximidad a áreas de vegetación.'},
+    {n:'San Cayetanito / barda',c:[-41.150,-71.292],r:'Sector de barda mencionado como zona a observar por antecedentes de foco.'}
+  ];
+  sectores.forEach(s=>{
+    puntos.push(s.c);
+    L.circle(s.c,{radius:700,color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2})
+     .bindPopup('<b>'+s.n+'</b><br><small>'+s.r+'</small>')
+     .addTo(window.map)
+  });
+
+  const inst=[
+    {n:'Protección Civil Municipal',c:[-41.1337,-71.3109],l:'PC'},
+    {n:'SPLIF Bariloche',c:[-41.1299,-71.4248],l:'S'},
+    {n:'Bomberos Voluntarios',c:[-41.1476,-71.2988],l:'B'},
+    {n:'Hospital Zonal Ramón Carrillo',c:[-41.1364,-71.3000],l:'H'}
+  ];
+  inst.forEach(i=>{
+    puntos.push(i.c);
+    L.marker(i.c,{icon:L.divIcon({
+      html:'<div style="background:#277da1;color:#fff;border:2px solid #fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;box-shadow:0 2px 8px #0005">'+i.l+'</div>',
+      className:'',iconSize:[30,30],iconAnchor:[15,15]
+    })})
+    .bindPopup('<b>'+i.n+'</b>')
+    .addTo(window.map)
+  });
+
+  window._mapBounds=L.latLngBounds(puntos);
+  setTimeout(()=>{
+    window.map.invalidateSize(true);
+    window.map.fitBounds(window._mapBounds,{padding:[25,25]});
+  },250);
+}
+function budgetChart(){new Chart(document.getElementById('budgetChart'),{type:'doughnut',data:{labels:['Material gráfico','Señalización','Capacitaciones','Comunicación','Relevamiento','Ejercicio','Limpieza preventiva','Imprevistos'],datasets:[{data:[750000,1200000,600000,5000000,500000,1100000,1500000,500000],backgroundColor:['#f4a261','#d94835','#e9c46a','#277da1','#52b788','#9b5de5','#2d6a4f','#8d99ae'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': $'+c.parsed.toLocaleString('es-AR')}}},cutout:'58%'}})}
 function indChart(){new Chart(document.getElementById('indChart'),{type:'bar',data:{labels:['Personas','Reuniones','Barrios','Puntos','Ejercicios'],datasets:[{label:'Meta inicial',data:[300,4,5,20,1],backgroundColor:['#d94835','#277da1','#52b788','#f4a261','#9b5de5'],borderRadius:8}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}},x:{grid:{display:false}}}}})}
 const steps=[['1. Recepción de alerta','Se recibe aviso de foco o condición crítica. Protección Civil y SPLIF validan información inicial, ubicación y posible evolución.'],['2. Comunicación a referentes','Se emite mensaje breve a referentes barriales y vecinos: zona afectada, conducta esperada, puntos seguros y canales oficiales.'],['3. Activación institucional','SPLIF, Bomberos, Protección Civil y demás actores activan roles previstos. Se ordenan recursos, accesos y comunicación operativa.'],['4. Evacuación preventiva','Si el escenario lo requiere, se guía la salida preventiva de familias vulnerables hacia puntos seguros previamente señalizados.'],['5. Asistencia y control','Se registra población movilizada, necesidades básicas y situación del foco. Se evita saturar el área de intervención.'],['6. Evaluación posterior','Se realiza un cierre con lecciones aprendidas: qué funcionó, qué falló, tiempos, comunicación y mejoras al plan.']];function step(i){document.querySelectorAll('.step').forEach((e,j)=>e.classList.toggle('active',i===j));document.getElementById('scenario').innerHTML='<h3>'+steps[i][0]+'</h3><p>'+steps[i][1]+'</p>'}
-window.addEventListener('load',()=>{initMap();animateNumbers();});
+window.addEventListener('load',()=>{animateNumbers();});
 </script>
 </body>
 </html>
