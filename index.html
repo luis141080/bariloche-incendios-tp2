@@ -18,11 +18,11 @@
 body{font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.55}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 header{background:linear-gradient(135deg,var(--forest),var(--forest2));color:#fff;padding:28px 32px;border-bottom:5px solid var(--fire)}
-.logo{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px;font-weight:800;letter-spacing:.5px}.logo .u{color:#e63946;font-weight:900;text-shadow:0 0 10px rgba(230,57,70,.4)}.logo span{opacity:.88;font-size:.8rem;font-weight:600;text-transform:uppercase}.sep{height:20px;width:1px;background:rgba(255,255,255,.32)}
+.logo{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px;font-weight:800;letter-spacing:.5px}.logo .u{color:#ff5c4d}.logo span{opacity:.88;font-size:.8rem;font-weight:600;text-transform:uppercase}.sep{height:20px;width:1px;background:rgba(255,255,255,.32)}
 h1{font-size:1.55rem;line-height:1.25;max-width:900px}.sub{display:block;font-weight:400;font-size:.95rem;opacity:.86;margin-top:8px}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.badge{font-size:.72rem;font-weight:700;border-radius:20px;padding:4px 10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25)}.badge.fire{background:var(--fire);border-color:transparent}.badge.green{background:rgba(82,183,136,.35)}
-nav{position:sticky;top:0;z-index:1000;display:flex;overflow-x:auto;overflow-y:hidden;white-space:nowrap;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.05);-webkit-overflow-scrolling:touch;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
-.navbtn{border:0;background:transparent;padding:14px 18px;min-width:max-content;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;flex-shrink:0}.btn-label{display:inline}.navbtn:hover{color:var(--forest2);background:rgba(37,95,72,.06)}.navbtn.active{color:var(--forest2);border-bottom-color:var(--forest2);background:rgba(37,95,72,.11)}
+nav{position:sticky;top:0;z-index:1000;display:flex;overflow:auto;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.navbtn{border:0;background:transparent;padding:14px 18px;min-width:max-content;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent}.navbtn:hover{color:var(--forest2);background:rgba(37,95,72,.06)}.navbtn.active{color:var(--forest2);border-bottom-color:var(--forest2);background:rgba(37,95,72,.11)}
 main{max-width:1180px;margin:0 auto}.section{display:none;padding:28px 20px}.section.active{display:block}.title{font-size:1.18rem;color:var(--forest2);font-weight:800;margin-bottom:6px}.desc{color:var(--muted);max-width:920px;font-size:.92rem;margin-bottom:20px}.grid{display:grid;gap:16px}.grid2{grid-template-columns:1.2fr .8fr}.grid3{grid-template-columns:repeat(3,1fr)}
 .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}.card h3{font-size:.96rem;color:var(--forest2);margin-bottom:10px}.card p{color:var(--muted);font-size:.9rem;margin-bottom:8px}.small{font-size:.78rem;color:var(--muted)}.note{background:#fff8e1;border-left:4px solid var(--warn);padding:12px 14px;border-radius:10px;color:#765c09;font-size:.88rem}
 .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}.kpi .num{font-size:1.85rem;font-weight:850;color:var(--fire);line-height:1}.kpi .lbl{font-size:.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:7px;letter-spacing:.4px}.kpi .unit{font-size:.77rem;color:var(--muted);margin-top:5px}
@@ -32,29 +32,7 @@ main{max-width:1180px;margin:0 auto}.section{display:none;padding:28px 20px}.sec
 .resource-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}.resource-table th{background:var(--forest2);color:#fff;text-align:left;font-size:.76rem;padding:10px}.resource-table td{border-bottom:1px solid var(--line);padding:9px;font-size:.8rem;color:var(--muted)}.resource-table tr:last-child td{border-bottom:0}.resource-table td:nth-child(5){font-weight:800;color:var(--text);white-space:nowrap}
 .stepper{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}.step{padding:12px 10px;border-radius:12px;background:#fff;border:1px solid var(--line);text-align:center;cursor:pointer;transition:.2s}.step:hover,.step.active{border-color:var(--fire);background:#fff2ef;transform:translateY(-2px)}.step .n{width:26px;height:26px;border-radius:50%;background:var(--fire);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:6px}.step p{font-size:.76rem;color:var(--muted);font-weight:700}.scenario-box{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;min-height:110px}.scenario-box h3{color:var(--fire);font-size:.98rem;margin-bottom:8px}.scenario-box p{color:var(--muted);font-size:.9rem}
 footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text-align:center;padding:18px;font-size:.78rem}
-@media(max-width:800px){
-  header{padding:16px 14px}
-  .logo{gap:6px;margin-bottom:12px}
-  .logo strong{font-size:1.1rem}
-  .logo span{font-size:.68rem}
-  .sep{display:none}
-  h1{font-size:1.08rem;line-height:1.3}
-  .sub{font-size:.82rem}
-  .badges{gap:5px;margin-top:10px}
-  .badge{font-size:.65rem;padding:3px 8px}
-  nav{gap:0}
-  .navbtn{font-size:1.1rem;padding:10px 12px;min-width:unset}
-  .btn-label{display:none}
-  .section{padding:18px 12px}
-  .grid2,.grid3,.actor-grid,.kpis{grid-template-columns:1fr}
-  .stepper{grid-template-columns:repeat(2,1fr)}
-  #map{height:340px}
-  .tlrow{grid-template-columns:1fr}
-  .tlmonth{text-align:left;padding-top:0}
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  .kpi .num{font-size:1.5rem}
-  .resource-table th,.resource-table td{font-size:.72rem;padding:7px 6px}
-}
+@media(max-width:800px){header{padding:22px 18px}h1{font-size:1.22rem}.grid2,.grid3,.actor-grid,.kpis{grid-template-columns:1fr}.stepper{grid-template-columns:repeat(2,1fr)}#map{height:390px}.tlrow{grid-template-columns:1fr}.tlmonth{text-align:left;padding-top:0}.navbtn{font-size:.8rem;padding:12px}}
 </style>
 </head>
 <body>
@@ -64,14 +42,14 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
   <div class="badges"><span class="badge fire">Interfase urbano-forestal</span><span class="badge">Protección Civil Municipal</span><span class="badge">SPLIF Río Negro</span><span class="badge">Bomberos Voluntarios</span><span class="badge green">Participación comunitaria</span></div>
 </header>
 <nav>
-  <button class="navbtn active" onclick="showTab('inicio',this)">🏠 <span class="btn-label">Inicio</span></button>
-  <button class="navbtn" onclick="showTab('mapa',this)">🗺️ <span class="btn-label">Mapa</span></button>
-  <button class="navbtn" onclick="showTab('actividades',this)">📅 <span class="btn-label">Actividades</span></button>
-  <button class="navbtn" onclick="showTab('actores',this)">🤝 <span class="btn-label">Actores</span></button>
-  <button class="navbtn" onclick="showTab('recursos',this)">💰 <span class="btn-label">Recursos</span></button>
-  <button class="navbtn" onclick="showTab('indicadores',this)">📊 <span class="btn-label">Indicadores</span></button>
-  <button class="navbtn" onclick="showTab('simulacro',this)">🚨 <span class="btn-label">Ejercicio</span></button>
-  <button class="navbtn" onclick="showTab('fuentes',this)">📚 <span class="btn-label">Fuentes</span></button>
+  <button class="navbtn active" onclick="showTab('inicio',this)">🏠 Inicio</button>
+  <button class="navbtn" onclick="showTab('mapa',this)">🗺️ Mapa del proyecto</button>
+  <button class="navbtn" onclick="showTab('actividades',this)">📅 Actividades</button>
+  <button class="navbtn" onclick="showTab('actores',this)">🤝 Actores</button>
+  <button class="navbtn" onclick="showTab('recursos',this)">💰 Recursos</button>
+  <button class="navbtn" onclick="showTab('indicadores',this)">📊 Indicadores</button>
+  <button class="navbtn" onclick="showTab('simulacro',this)">🚨 Ejercicio</button>
+  <button class="navbtn" onclick="showTab('fuentes',this)">📚 Fuentes</button>
 </nav>
 <main>
 <section id="tab-inicio" class="section active">
@@ -93,7 +71,7 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
   <p class="title">Mapa del proyecto</p>
   <p class="desc">Visualización de sectores propuestos para el relevamiento inicial y principales instituciones intervinientes. No reemplaza una cartografía oficial, sino que sirve como apoyo para mostrar la lógica territorial del proyecto.</p>
   <div id="map"></div>
-  <div class="legend"><div class="leg"><span class="poly" style="background:#d94835"></span>Sector propuesto para relevamiento</div><div class="leg"><span class="dot" style="background:#277da1"></span>Instituciones / respuesta</div></div>
+  <div class="legend"><div class="leg"><span class="poly" style="background:#d94835"></span>Sector propuesto para relevamiento</div><div class="leg"><span class="dot" style="background:#277da1"></span>Instituciones / respuesta</div><div class="leg"><span class="dot" style="background:#52b788"></span>Espacio comunitario / educativo</div><div class="leg"><span class="dot" style="background:#d94835"></span>Antecedente de foco/incendio</div></div>
   <p class="small" style="margin-top:8px">Nota: para evitar afirmaciones incorrectas, se habla de sectores de trabajo o relevamiento inicial. La delimitación final requiere validación institucional y territorial.</p>
 </section>
 <section id="tab-actividades" class="section">
@@ -142,7 +120,7 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
   <div id="scenario" class="scenario-box"><h3>1. Recepción de alerta</h3><p>Se recibe aviso de foco o condición crítica. Protección Civil y SPLIF validan información inicial, ubicación y posible evolución.</p></div>
 </section>
 <section id="tab-fuentes" class="section">
-  <p class="title">Fuentes y bibliografía de apoyo</p><p class="desc">Listado base utilizado para el trabajo y para este complemento digital. Las referencias formales deben mantenerse en APA 7 dentro del documento final.</p>
+  <p class="title">Fuentes y bibliografía de apoyo</p><p class="desc">Listado base utilizado para el trabajo y para este complemento digital.</p>
   <div class="card"><ul style="padding-left:18px;color:var(--muted);font-size:.9rem"><li>Municipalidad de San Carlos de Bariloche. Plan de Emergencias / Plan de contingencia de incendios de interfase.</li><li>Servicio de Prevención y Lucha contra Incendios Forestales. (2024). Plan de protección contra incendios forestales: Río Negro.</li><li>Dirección Nacional de Fortalecimiento de las Capacidades de Gestión. (2020). Guía de planificación y seguimiento de gestión de políticas públicas.</li><li>Ministerio de Seguridad de la Nación. (2015). Glosario integrado: Protección Civil y Gestión Integral de Riesgo.</li><li>Bariloche Informa. (2026). Antecedentes de focos ígneos y apoyo municipal.</li><li>Gobierno de Río Negro. (2024). Información institucional del SPLIF.</li></ul></div>
 </section>
 </main>
@@ -155,15 +133,17 @@ function showTab(id,btn){
   btn.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 
+  // El mapa se inicializa recién cuando se abre la pestaña.
+  // Esto evita el problema de Leaflet cuando el div arranca oculto con display:none.
   if(id==='mapa'){
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      if(!window._leafletMap){
+    setTimeout(()=>{
+      if(!window.map){
         initMap();
       }else{
-        window._leafletMap.invalidateSize(true);
-        if(window._mapBounds){ window._leafletMap.fitBounds(window._mapBounds,{padding:[25,25]}); }
+        window.map.invalidateSize(true);
+        if(window._mapBounds){ window.map.fitBounds(window._mapBounds,{padding:[25,25]}); }
       }
-    }));
+    },180);
   }
 
   if(id==='recursos'&&!window.budgetInit){budgetChart();window.budgetInit=true}
@@ -190,45 +170,36 @@ function initMap(){
   const mapDiv=document.getElementById('map');
   if(!mapDiv) return;
 
+  // Mensaje claro si Leaflet no carga por falta de internet o bloqueo del CDN.
   if(typeof L==='undefined'){
     mapDiv.innerHTML='<div style="height:100%;min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#eef2f0;color:#667085"><div><b>No se pudo cargar el mapa.</b><br>Revisá conexión a internet o que GitHub Pages permita cargar Leaflet desde unpkg.com.</div></div>';
     return;
   }
 
-  if(window._leafletMap){
-    window._leafletMap.invalidateSize(true);
+  if(window.map){
+    window.map.invalidateSize(true);
     return;
   }
 
-  window._leafletMap=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
+  window.map=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     maxZoom:18,
     attribution:'© OpenStreetMap'
-  }).addTo(window._leafletMap);
+  }).addTo(window.map);
 
   const puntos=[];
   const sectores=[
-    {n:'San Cayetanito / 84 Viviendas',
-     coords:[[-41.142566,-71.284468],[-41.143902,-71.284018],[-41.14391,-71.283365],[-41.143857,-71.28201],[-41.143523,-71.282325],[-41.14304,-71.282398],[-41.142575,-71.28252],[-41.142566,-71.284468]],
-     r:'Sector de 84 viviendas. Zona a observar por antecedentes de foco.'},
-    {n:'Arrayanes',
-     coords:[[-41.163012,-71.299193],[-41.160435,-71.298731],[-41.160293,-71.298774],[-41.15984,-71.298229],[-41.159415,-71.298267],[-41.159071,-71.298974],[-41.158361,-71.299805],[-41.157987,-71.300306],[-41.157891,-71.301164],[-41.159534,-71.301481],[-41.159312,-71.303761],[-41.160768,-71.304055],[-41.160952,-71.30409],[-41.162482,-71.304347],[-41.163012,-71.299193]],
-     r:'Sector propuesto para relevamiento inicial por proximidad a áreas de vegetación.'},
-    {n:'Eva Perón / Cantera',
-     coords:[[-41.158941,-71.307058],[-41.160481,-71.307344],[-41.16212,-71.307632],[-41.162482,-71.304347],[-41.160952,-71.30409],[-41.160768,-71.304055],[-41.159312,-71.303761],[-41.158941,-71.307058]],
-     r:'Sector sur con antecedente de foco ígneo. Requiere relevamiento de accesos y combustible.'},
-    {n:'El Frutillar',
-     coords:[[-41.155938,-71.325719],[-41.155864,-71.325732],[-41.154301,-71.32761],[-41.154965,-71.33007],[-41.158062,-71.341999],[-41.159332,-71.346813],[-41.162616,-71.34296],[-41.164664,-71.340539],[-41.166835,-71.337986],[-41.170785,-71.333401],[-41.170365,-71.331647],[-41.169969,-71.33033],[-41.169774,-71.329676],[-41.16947,-71.328684],[-41.168753,-71.326275],[-41.168619,-71.32584],[-41.164805,-71.320414],[-41.162552,-71.31885],[-41.161975,-71.318474],[-41.160205,-71.320582],[-41.157613,-71.323691],[-41.155998,-71.325586],[-41.155938,-71.325719]],
-     r:'Sector urbano de la zona sur, con necesidad de prevención comunitaria.'},
-    {n:'Melipal',
-     coords:[[-41.128937,-71.360303],[-41.129098,-71.360358],[-41.130836,-71.360983],[-41.131086,-71.361334],[-41.13104,-71.361583],[-41.131313,-71.361711],[-41.131537,-71.360347],[-41.135751,-71.361889],[-41.136607,-71.362234],[-41.137219,-71.362408],[-41.1395,-71.351388],[-41.133888,-71.349336],[-41.133953,-71.348952],[-41.133224,-71.348715],[-41.132914,-71.349766],[-41.130231,-71.34822],[-41.130063,-71.348296],[-41.129044,-71.347707],[-41.128534,-71.347892],[-41.128445,-71.348788],[-41.128123,-71.348895],[-41.127808,-71.349624],[-41.127271,-71.350878],[-41.126906,-71.351245],[-41.126759,-71.351575],[-41.126417,-71.35219],[-41.126185,-71.353357],[-41.126141,-71.353949],[-41.125588,-71.355214],[-41.12522,-71.35647],[-41.12494,-71.357054],[-41.12445,-71.368685],[-41.128937,-71.360303]],
-     r:'Sector de interfase sobre faldeo y zona residencial cercana a bosque.'}
+    {n:'Eva Perón / Cantera',c:[-41.162,-71.305],r:'Sector sur con antecedente de foco ígneo. Requiere relevamiento de accesos y combustible.'},
+    {n:'Melipal',c:[-41.139,-71.374],r:'Sector de interfase sobre faldeo y zona residencial cercana a bosque.'},
+    {n:'El Frutillar',c:[-41.164,-71.334],r:'Sector urbano de la zona sur, con necesidad de prevención comunitaria.'},
+    {n:'Arrayanes',c:[-41.173,-71.349],r:'Sector propuesto para relevamiento inicial por proximidad a áreas de vegetación.'},
+    {n:'San Cayetanito / barda',c:[-41.150,-71.292],r:'Sector de barda mencionado como zona a observar por antecedentes de foco.'}
   ];
   sectores.forEach(s=>{
-    s.coords.forEach(c=>puntos.push(c));
-    L.polygon(s.coords,{color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2})
+    puntos.push(s.c);
+    L.circle(s.c,{radius:700,color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2})
      .bindPopup('<b>'+s.n+'</b><br><small>'+s.r+'</small>')
-     .addTo(window._leafletMap)
+     .addTo(window.map)
   });
 
   const inst=[
@@ -244,13 +215,13 @@ function initMap(){
       className:'',iconSize:[30,30],iconAnchor:[15,15]
     })})
     .bindPopup('<b>'+i.n+'</b>')
-    .addTo(window._leafletMap)
+    .addTo(window.map)
   });
 
   window._mapBounds=L.latLngBounds(puntos);
   setTimeout(()=>{
-    window._leafletMap.invalidateSize(true);
-    window._leafletMap.fitBounds(window._mapBounds,{padding:[25,25]});
+    window.map.invalidateSize(true);
+    window.map.fitBounds(window._mapBounds,{padding:[25,25]});
   },250);
 }
 function budgetChart(){new Chart(document.getElementById('budgetChart'),{type:'doughnut',data:{labels:['Material gráfico','Señalización','Capacitaciones','Comunicación','Relevamiento','Ejercicio','Limpieza preventiva','Imprevistos'],datasets:[{data:[750000,1200000,600000,5000000,500000,1100000,1500000,500000],backgroundColor:['#f4a261','#d94835','#e9c46a','#277da1','#52b788','#9b5de5','#2d6a4f','#8d99ae'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': $'+c.parsed.toLocaleString('es-AR')}}},cutout:'58%'}})}
