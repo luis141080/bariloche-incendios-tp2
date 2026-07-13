@@ -70,7 +70,7 @@ footer{margin-top:25px;background:var(--forest);color:rgba(255,255,255,.76);text
 <section id="tab-mapa" class="section">
   <p class="title">Mapa del proyecto</p>
   <p class="desc">Visualización de sectores propuestos para el relevamiento inicial y principales instituciones intervinientes. No reemplaza una cartografía oficial, sino que sirve como apoyo para mostrar la lógica territorial del proyecto.</p>
-  <div id="map"></div>
+  <div id="map" aria-label="Mapa interactivo del proyecto"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#667085;font-size:.9rem">Abrí esta sección para cargar el mapa interactivo.</div></div>
   <div class="legend"><div class="leg"><span class="poly" style="background:#d94835"></span>Sector propuesto para relevamiento</div><div class="leg"><span class="dot" style="background:#277da1"></span>Instituciones / respuesta</div><div class="leg"><span class="dot" style="background:#52b788"></span>Espacio comunitario / educativo</div><div class="leg"><span class="dot" style="background:#d94835"></span>Antecedente de foco/incendio</div></div>
   <p class="small" style="margin-top:8px">Nota: para evitar afirmaciones incorrectas, se habla de sectores de trabajo o relevamiento inicial. La delimitación final requiere validación institucional y territorial.</p>
 </section>
@@ -137,11 +137,11 @@ function showTab(id,btn){
   // Esto evita el problema de Leaflet cuando el div arranca oculto con display:none.
   if(id==='mapa'){
     setTimeout(()=>{
-      if(!window.map){
+      if(!window.projectMap){
         initMap();
       }else{
-        window.map.invalidateSize(true);
-        if(window._mapBounds){ window.map.fitBounds(window._mapBounds,{padding:[25,25]}); }
+        window.projectMap.invalidateSize(true);
+        if(window._mapBounds){ window.projectMap.fitBounds(window._mapBounds,{padding:[25,25]}); }
       }
     },180);
   }
@@ -176,16 +176,17 @@ function initMap(){
     return;
   }
 
-  if(window.map){
-    window.map.invalidateSize(true);
+  if(window.projectMap){
+    window.projectMap.invalidateSize(true);
     return;
   }
 
-  window.map=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
+  mapDiv.innerHTML='';
+  window.projectMap=L.map('map',{scrollWheelZoom:false}).setView([-41.146,-71.323],12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     maxZoom:18,
     attribution:'© OpenStreetMap'
-  }).addTo(window.map);
+  }).addTo(window.projectMap);
 
   const puntos=[];
   const sectores=[
@@ -199,7 +200,7 @@ function initMap(){
     puntos.push(s.c);
     L.circle(s.c,{radius:700,color:'#d94835',fillColor:'#d94835',fillOpacity:.23,weight:2})
      .bindPopup('<b>'+s.n+'</b><br><small>'+s.r+'</small>')
-     .addTo(window.map)
+     .addTo(window.projectMap)
   });
 
   const inst=[
@@ -215,13 +216,13 @@ function initMap(){
       className:'',iconSize:[30,30],iconAnchor:[15,15]
     })})
     .bindPopup('<b>'+i.n+'</b>')
-    .addTo(window.map)
+    .addTo(window.projectMap)
   });
 
   window._mapBounds=L.latLngBounds(puntos);
   setTimeout(()=>{
-    window.map.invalidateSize(true);
-    window.map.fitBounds(window._mapBounds,{padding:[25,25]});
+    window.projectMap.invalidateSize(true);
+    window.projectMap.fitBounds(window._mapBounds,{padding:[25,25]});
   },250);
 }
 function budgetChart(){new Chart(document.getElementById('budgetChart'),{type:'doughnut',data:{labels:['Material gráfico','Señalización','Capacitaciones','Comunicación','Relevamiento','Ejercicio','Limpieza preventiva','Imprevistos'],datasets:[{data:[750000,1200000,600000,5000000,500000,1100000,1500000,500000],backgroundColor:['#f4a261','#d94835','#e9c46a','#277da1','#52b788','#9b5de5','#2d6a4f','#8d99ae'],borderWidth:2,borderColor:'#fff'}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': $'+c.parsed.toLocaleString('es-AR')}}},cutout:'58%'}})}
